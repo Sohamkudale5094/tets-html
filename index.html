@@ -1571,21 +1571,22 @@
     }
   }
 
-  function shareLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        let lat = position.coords.latitude;
-        let lon = position.coords.longitude;
-        let locationLink = `https://maps.google.com/?q=${lat},${lon}`;
-        // Show location link to user to copy/share
-        prompt("Copy and share this location:", locationLink);
-      }, () => {
-        alert("Location access denied. Please enable GPS.");
-      });
-    } else {
-      alert("Geolocation is not supported by your browser.");
-    }
+function shareLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(position => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      const mapLink = `https://maps.google.com/?q=${lat},${lon}`;
+      const message = encodeURIComponent(`📍 Here's my current location: ${mapLink}`);
+      window.location.href = `https://wa.me/?text=${message}`;
+    }, () => {
+      alert("Location access denied. Please enable GPS and allow location access.");
+    });
+  } else {
+    alert("Geolocation is not supported by your browser.");
   }
+}
+
 </script>
 
 
